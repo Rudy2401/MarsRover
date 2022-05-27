@@ -1,5 +1,23 @@
 # MarsRover
-Mars Rover Python code
+Mars Rover Python code<br>
+
+Directory structure:<br>
+```buildoutcfg
+.
+├── MarsRover
+│   ├── __init__.py
+│   ├── rover.py
+│   └── rover_processing.py
+├── README.md
+├── __init__.py
+├── main.py
+└── tests
+    ├── __init__.py
+    └── test_rover.py
+
+2 directories, 8 files
+```
+
 
 **Problem**:<br>
 A squad of robotic rovers are to be landed by NASA on a plateau on Mars. This plateau, which is curiously rectangular, must be navigated by the rovers so that their on-board cameras can get a complete view of the surrounding terrain to send back to Earth.
