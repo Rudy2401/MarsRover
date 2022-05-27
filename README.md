@@ -2,7 +2,7 @@
 Mars Rover Python code<br>
 
 Directory structure:<br>
-```buildoutcfg
+```commandline
 .
 ├── MarsRover
 │   ├── __init__.py
@@ -43,12 +43,16 @@ The output for each rover should be its final co-ordinates and heading.
  
 **INPUT AND OUTPUT**<br>
 **Test Input**:<br>
-5 5<br>
-1 2 N<br>
-LMLMLMLMM<br>
-3 3 E<br>
-MMRMMRMRRM<br>
+```commandline
+5 5
+1 2 N
+LMLMLMLMM
+3 3 E
+MMRMMRMRRM
+```
  
 **Expected Output**:<br>
-1 3 N<br>
-5 1 E<br>
+```commandline
+1 3 N
+5 1 E
+```
