@@ -3,9 +3,14 @@ Mars Rover Python code<br>
 
 Directory structure:<br>
 ```commandline
-.
 ├── MarsRover
 │   ├── __init__.py
+│   ├── __pycache__
+│   │   ├── __init__.cpython-310.pyc
+│   │   ├── plateau.cpython-310.pyc
+│   │   ├── rover.cpython-310.pyc
+│   │   └── rover_processing.cpython-310.pyc
+│   ├── plateau.py
 │   ├── rover.py
 │   └── rover_processing.py
 ├── README.md
@@ -15,7 +20,7 @@ Directory structure:<br>
     ├── __init__.py
     └── test_rover.py
 
-2 directories, 8 files
+3 directories, 13 files
 ```
 
 

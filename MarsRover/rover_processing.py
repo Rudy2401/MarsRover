@@ -1,5 +1,4 @@
-from typing import List
-from .rover import Rover
+from .plateau import Plateau
 
 
 EAST = 'E'
@@ -30,16 +29,14 @@ MOVE_MAP = {
 
 
 class RoverProcessing:
-    def __init__(self, rovers: List[Rover], size: tuple) -> None:
-        self.rovers = rovers
-        self.size = size
-        self.occupied_positions = set()
+    def __init__(self, plateau: Plateau) -> None:
+        self.plateau = plateau
 
     def check_rover_bounds(self, position: tuple) -> bool:
         """Check if initial position of rover is out of bounds"""
 
-        max_x = self.size[0]
-        max_y = self.size[1]
+        max_x = self.plateau.size[0]
+        max_y = self.plateau.size[1]
         sx = position[0]
         sy = position[1]
         if sx < 0 or sx > max_x or sy < 0 or sy > max_y:
@@ -49,14 +46,14 @@ class RoverProcessing:
     def move_rover(self) -> None:
         """Move rover according to instructions"""
 
-        for rover in self.rovers:
+        for rover in self.plateau.get_rovers():
             # Get current position of rover
             sx = rover.position[0]
             sy = rover.position[1]
 
             # Check if current position is occupied
             self.check_if_occupied((sx, sy))
-            direction = rover.position[2]
+            direction = rover.direction
             for instruction in rover.instructions:
                 next_move = (direction, instruction)
                 if next_move in DIRECTION_MAP:
@@ -72,17 +69,18 @@ class RoverProcessing:
                 else:
                     # Invalid instruction
                     raise ValueError(f"Invalid instruction: {instruction}")
-            rover.position = (sx, sy, direction)
-            self.occupied_positions.add((sx, sy))
+            rover.position = (sx, sy)
+            rover.direction = direction
+            self.plateau.set_occupied_positions(rover)
 
     def check_if_occupied(self, position: tuple) -> None:
         """Check if position is occupied and raise Error"""
 
-        if position in self.occupied_positions:
+        if position in self.plateau.get_occupied_positions():
             raise ValueError(f"Rover {position} is already occupied")
 
     def print_rovers(self) -> None:
         """Print current position of rovers"""
 
-        for rover in self.rovers:
-            print(rover.position)
+        for rover in self.plateau.get_rovers():
+            print(f'{rover.position[0]} {rover.position[1]} {rover.direction}')

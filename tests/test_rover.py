@@ -1,5 +1,5 @@
 import unittest
-from ..MarsRover import Rover, RoverProcessing
+from ..MarsRover import Rover, RoverProcessing, Plateau
 
 
 class TestRover(unittest.TestCase):
@@ -7,59 +7,46 @@ class TestRover(unittest.TestCase):
 
     def test_rover_init(self):
         """Test rover init"""
-        rover = Rover((1, 2, 'N'), 'LMLMLMLMM')
-        self.assertEqual(rover.position, (1, 2, 'N'))
+        rover = Rover((1, 2), 'N', 'LMLMLMLMM')
+        self.assertEqual(rover.position, (1, 2))
+        self.assertEqual(rover.direction, 'N')
         self.assertEqual(rover.instructions, 'LMLMLMLMM')
+
+
+class TestPlateau(unittest.TestCase):
+    """Test Plateau class"""
+    def test_plateau_init(self):
+        """Test plateau init"""
+        rovers = [Rover((1, 2), 'N', 'LMLMLMLMM'),
+                  Rover((3, 3), 'E', 'MMRMMRMRRM')]
+        plateau = Plateau((5, 5), rovers)
+        self.assertEqual(plateau.size, (5, 5))
+        self.assertEqual(plateau.rovers, rovers)
 
 
 class TestRoverProcessing(unittest.TestCase):
     """Test RoverProcessing class"""
 
-    def test_rover_bounds(self):
-        """Test rover bounds"""
-        size = (5, 5)
-        rovers = [
-            Rover((1, 2, 'N'), 'LMLMLMLMM'),
-            Rover((3, 3, 'E'), 'MMRMMRMRRM')
-        ]
-        rover_processing = RoverProcessing(rovers, size)
-        rover_processing.check_rover_bounds(rovers[0].position)
-        rover_processing.check_rover_bounds(rovers[1].position)
-        self.assertTrue(True)
-
     def test_move_rover(self):
         """Test rover move"""
 
-        size = (5, 5)
-        rovers = [
-            Rover((1, 2, 'N'), 'LMLMLMLMM'),
-            Rover((3, 3, 'E'), 'MMRMMRMRRM')
-        ]
-        rover_processing = RoverProcessing(rovers, size)
+        rovers = [Rover((1, 2), 'N', 'LMLMLMLMM'),
+                  Rover((3, 3), 'E', 'MMRMMRMRRM')]
+        plateau = Plateau((5, 5), rovers)
+        rover_processing = RoverProcessing(plateau)
         rover_processing.move_rover()
-        self.assertTrue(rovers[0].position == (1, 3, 'N'))
-        self.assertTrue(rovers[1].position == (5, 1, 'E'))
+        self.assertEqual(rovers[0].position, (1, 3))
+        self.assertEqual(rovers[1].position, (5, 1))
+        self.assertEqual(rovers[0].direction, 'N')
+        self.assertEqual(rovers[1].direction, 'E')
 
     def test_move_rover_exception(self):
         """Test rover move"""
 
-        size = (5, 5)
-        rovers = [
-            Rover((1, 2, 'N'), 'LMLMLMLMM'),
-            Rover((3, 3, 'E'), 'MMRMMRMRRM'),
-            Rover((1, 3, 'E'), 'MMRMMRMRRM')
-        ]
-        rover_processing = RoverProcessing(rovers, size)
+        rovers = [Rover((1, 2), 'N', 'LMLMLMLMM'),
+                  Rover((3, 3), 'E', 'MMRMMRMRRM'),
+                  Rover((1, 3), 'E', 'MMRMMRMRRM')]
+        plateau = Plateau((5, 5), rovers)
+        rover_processing = RoverProcessing(plateau)
         self.assertRaises(ValueError, rover_processing.move_rover)
 
-    def test_print_rovers(self):
-        """Test rover print"""
-
-        size = (5, 5)
-        rovers = [
-            Rover((1, 2, 'N'), 'LMLMLMLMM'),
-            Rover((1, 3, 'E'), 'MMRMMRMRRM')
-        ]
-        rover_processing = RoverProcessing(rovers, size)
-        rover_processing.print_rovers()
-        self.assertTrue(True)
